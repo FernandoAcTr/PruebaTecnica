@@ -5,7 +5,7 @@ $(document).ready(function () {
       dataSrc: '',
     },
     columns: [
-      { data: 'id_producto' },
+      { data: 'id' },
       { data: 'clave_producto' },
       { data: 'nombre' },
       { data: 'precio' },
@@ -43,11 +43,31 @@ $(document).ready(function () {
   })
   $('#tableProducts tbody').on('click', '.btn-delete', function () {
     var data = table.row($(this).parents('tr')).data()
-    alert(JSON.stringify(data))
+    deleteProduct(data.id)
   })
   $('#tableProducts tbody').on('click', '.btn-update', function () {
     var data = table.row($(this).parents('tr')).data()
-    alert('update')
+    alert(JSON.stringify(data))
   })
   // table.ajax.reload()
+
+  function deleteProduct(product_id) {
+    Swal.fire({
+      title: '¿Estas Seguro?',
+      text: 'Esta acción no se puede deshacer!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await fetch(`http://localhost:3000/products/${product_id}`, {
+          method: 'DELETE',
+        })
+        table.ajax.reload()
+        Swal.fire('Eliminado!', 'El producto ha sido eliminado.', 'success')
+      }
+    })
+  }
 })
