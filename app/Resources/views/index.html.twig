@@ -1,0 +1,44 @@
+{% extends "layouts/main.html.twig" %}
+
+{% block body %}
+	<div class="px-5 bg-light rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">Registro de Productos</h1>
+			<p class="col-md-10 fs-5">Ésta es una prueba técnica realizada por Luis Fernando Acosta Tovar, en su proceso como aspirante a practicante. Fue realizada utilizando Symfony 3.2.4, MySQL, Boostrap, JQuery, Ajax y DataTable JS</p>
+			<button class="btn btn-primary btn-lg" type="button">Nuevo Producto</button>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<table class="table" id="tableProducts">
+					<thead>
+						<tr>
+							<th scope="col">ID Producto</th>
+							<th scope="col">Clave</th>
+							<th scope="col">Nombre</th>
+							<th scope="col">Precio</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{# <tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+						</tr> #}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+	<script src="{{asset('js/main.js')}}"></script>
+{% endblock %}
