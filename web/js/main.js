@@ -49,7 +49,6 @@ $(document).ready(function () {
     var data = table.row($(this).parents('tr')).data()
     alert(JSON.stringify(data))
   })
-  // table.ajax.reload()
 
   function deleteProduct(product_id) {
     Swal.fire({

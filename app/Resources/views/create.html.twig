@@ -1,0 +1,52 @@
+{% extends "layouts/main.html.twig" %}
+
+{% block body %}
+	<div class="px-5 bg-light rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">Registro de Productos</h1>
+			<p class="col-md-10 fs-5">Ésta es una prueba técnica realizada por Luis Fernando Acosta Tovar, en su proceso como aspirante a practicante. Fue realizada utilizando Symfony 3.2.4, MySQL, Boostrap, JQuery, Ajax y DataTable JS</p>
+		</div>
+	</div>
+
+	<div class="container mt-3">
+		<div class="row justify-content-center">
+			<div class="col-md-7">
+				<form action="http://localhost:3000/products" method="post">
+
+					<div class="form-group row">
+						<label for="id_producto" class="col-sm-3 col-form-label">ID Producto:</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="id_producto" name="id_producto">
+						</div>
+					</div>
+
+					<div class="form-group row mt-4">
+						<label for="clave_producto" class="col-sm-3 col-form-label">Clave Producto:</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="clave_producto" name="clave_producto">
+						</div>
+					</div>
+
+					<div class="form-group row mt-4">
+						<label for="nombre" class="col-sm-3 col-form-label">Nombre:</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="nombre" name="nombre">
+						</div>
+					</div>
+
+					<div class="form-group row mt-4">
+						<label for="precio" class="col-sm-3 col-form-label">Precio:</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="precio" name="precio">
+						</div>
+					</div>
+
+					<div class="text-end mt-3">
+						<input type="submit" value="Guardar" class="btn btn-primary">
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

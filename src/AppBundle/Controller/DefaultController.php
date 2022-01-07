@@ -9,10 +9,26 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="home")
      */
     public function indexAction(Request $request)
     {
         return $this->render('index.html.twig');
+    }
+
+    /**
+     * @Route("/create", name="create")
+     */
+    public function createAction(Request $request)
+    {
+        return $this->render('create.html.twig');
+    }
+
+    /**
+     * @Route("/edit", name="edit")
+     */
+    public function editAction(Request $request)
+    {
+        return $this->render('edit.html.twig');
     }
 }
