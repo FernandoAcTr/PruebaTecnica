@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,16 +51,17 @@ class DefaultController extends Controller
     {
 
         $body = $request->request->all();
+        
+        $procedure = "call store_product(:clave, :nombre, :precio)";
 
-        $product = new Product();
-        $product->setClaveProducto($body['clave_producto']);
-        $product->setNombre($body['nombre']);
-        $product->setPrecio($body['precio']);
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getConnection()->prepare($procedure);
+        $query->bindValue('clave', $body['clave_producto']);
+        $query->bindValue('nombre', $body['nombre']);
+        $query->bindValue('precio', $body['precio']);
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($product);
-        $manager->flush();
-
+        $query->execute();
+        $em->flush();
         return $this->redirectToRoute('home');
     }
 
@@ -68,8 +70,8 @@ class DefaultController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        $manager = $this->getDoctrine()->getManager();
-        $product = $manager->getRepository(Product::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)->find($id);
         return $this->render('edit.html.twig', ['product' => $product]);
     }
 
@@ -80,12 +82,12 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $id)
     {
         $body = $request->request->all();
-        $manager = $this->getDoctrine()->getManager();
-        $product = $manager->getRepository(Product::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)->find($id);
         $product->setNombre($body['nombre']);
         $product->setPrecio($body['precio']);
 
-        $manager->flush();
+        $em->flush();
 
         return $this->redirectToRoute('home');
     }
@@ -97,10 +99,10 @@ class DefaultController extends Controller
      */
     public function destroyAction(Request $request, $id)
     {
-        $manager = $this->getDoctrine()->getManager();
-        $product = $manager->getRepository(Product::class)->find($id);
-        $manager->remove($product);
-        $manager->flush();
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)->find($id);
+        $em->remove($product);
+        $em->flush();
         return new Response('Product deleted');
     }
 }
