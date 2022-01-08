@@ -51,17 +51,23 @@ class DefaultController extends Controller
     {
 
         $body = $request->request->all();
-        
-        $procedure = "call store_product(:clave, :nombre, :precio)";
 
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getConnection()->prepare($procedure);
-        $query->bindValue('clave', $body['clave_producto']);
-        $query->bindValue('nombre', $body['nombre']);
-        $query->bindValue('precio', $body['precio']);
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->getConnection()->prepare("call store_product(:clave, :nombre, :precio)");
+            $query->bindValue('clave', $body['clave_producto']);
+            $query->bindValue('nombre', $body['nombre']);
+            $query->bindValue('precio', $body['precio']);
 
-        $query->execute();
-        $em->flush();
+            $query->execute();
+            $em->flush();
+        } catch (\Throwable $th) {
+            return $this->render('create.html.twig', [
+                'error' => 'Clave de producto duplicada',
+                'old' => $body
+            ]);
+        }
+
         return $this->redirectToRoute('home');
     }
 

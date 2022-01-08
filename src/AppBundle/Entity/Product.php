@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Product
@@ -25,6 +27,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="clave_producto", type="string", length=255, unique=true)
+     * @Assert\NotBlank
      */
     private $claveProducto;
 
@@ -32,6 +35,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
+     * @Assert\NotBlank
      */
     private $nombre;
 
@@ -39,6 +43,11 @@ class Product
      * @var string
      *
      * @ORM\Column(name="precio", type="decimal", precision=19, scale=2)
+     * @Assert\NotBlank
+     * @Assert\Type(
+     *     type="float",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      */
     private $precio;
 
