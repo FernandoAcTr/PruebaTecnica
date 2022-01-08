@@ -1,12 +1,12 @@
 $(document).ready(function () {
   const table = $('#tableProducts').DataTable({
     ajax: {
-      url: 'http://localhost:3000/products',
+      url: '/products',
       dataSrc: '',
     },
     columns: [
       { data: 'id' },
-      { data: 'clave_producto' },
+      { data: 'claveProducto' },
       { data: 'nombre' },
       { data: 'precio' },
       {
@@ -47,7 +47,7 @@ $(document).ready(function () {
   })
   $('#tableProducts tbody').on('click', '.btn-update', function () {
     var data = table.row($(this).parents('tr')).data()
-    alert(JSON.stringify(data))
+    document.location = `/edit/${data.id}`
   })
 
   function deleteProduct(product_id) {
@@ -61,7 +61,7 @@ $(document).ready(function () {
       confirmButtonText: 'Sí, eliminar!',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch(`http://localhost:3000/products/${product_id}`, {
+        await fetch(`/products/${product_id}`, {
           method: 'DELETE',
         })
         table.ajax.reload()
