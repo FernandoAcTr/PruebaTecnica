@@ -68,10 +68,28 @@ class DefaultController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->render('edit.html.twig');
+        $manager = $this->getDoctrine()->getManager();
+        $product = $manager->getRepository(Product::class)->find($id);
+        return $this->render('edit.html.twig', ['product' => $product]);
     }
 
-    // TODO update method
+    /**
+     * @Route("/products/{id}", name="update")
+     * @Method({"PUT"})
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $body = $request->request->all();
+        $manager = $this->getDoctrine()->getManager();
+        $product = $manager->getRepository(Product::class)->find($id);
+        $product->setNombre($body['nombre']);
+        $product->setPrecio($body['precio']);
+
+        $manager->flush();
+
+        return $this->redirectToRoute('home');
+    }
+
 
     /**
      * @Route("/products/{id}", name="delete")
